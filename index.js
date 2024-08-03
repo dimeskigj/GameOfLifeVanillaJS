@@ -2,7 +2,7 @@ const liveCellChance = 0.3;
 let matrix = [];
 let isPaused = false;
 
-classes = {
+const classes = {
   cell: [
     "cell",
     "bg-slate-900",
@@ -10,16 +10,13 @@ classes = {
     "transition-colors",
     "ease-out",
     "duration-300",
-  ],
-  row: ["gol-cell-row", "flex", "flex-row", "justify-evenly"],
-  body: ["bg-slate-950", "flex", "flex-col", "justify-evenly", "!h-dvh"],
-  activeCell: [
-    "shadow-inner",
     "cursor-pointer",
     "opacity-80",
     "hover:opacity-100",
     "active:scale-105",
   ],
+  row: ["gol-cell-row", "flex", "flex-row", "justify-evenly"],
+  body: ["bg-slate-950", "flex", "flex-col", "justify-evenly", "!h-dvh"],
   activeCellColor: "bg-violet-600",
 };
 
@@ -34,7 +31,7 @@ onresize = () => {
   randomizeActiveCells(liveCellChance);
 };
 
-runGameLoop = () => {
+const runGameLoop = () => {
   if (!isPaused) updateCells();
   setTimeout(() => runGameLoop(), 1000);
 };
@@ -45,7 +42,7 @@ addEventListener("keyup", (event) => {
   }
 });
 
-initialize = () => {
+const initialize = () => {
   const height = window.innerHeight;
   const width = window.innerWidth;
   const bodyPadding = 10;
@@ -82,26 +79,41 @@ initialize = () => {
       const cellClone = cell.cloneNode();
       rowDiv.append(cellClone);
       rowElements.push(cellClone);
+      cellClone.addEventListener(
+        "click",
+        () => toggleActiveCell(cellClone),
+        false
+      );
     }
 
     matrix.push(rowElements);
   }
 };
 
-randomizeActiveCells = (activeCellChance) => {
+const toggleActiveCell = (cell) => {
+  if (cell.classList.contains(classes.activeCellColor)) {
+    cell.classList.remove(classes.activeCellColor);
+  } else {
+    cell.classList.add(classes.activeCellColor);
+  }
+};
+
+const randomizeActiveCells = (activeCellChance) => {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       const cell = matrix[i][j];
       if (Math.random() < 1 - activeCellChance) {
-        cell.classList.remove(classes.activeCellColor, ...classes.activeCell);
+        cell.classList.remove(classes.activeCellColor);
       } else {
-        cell.classList.add(classes.activeCellColor, ...classes.activeCell);
+        cell.classList.add(classes.activeCellColor);
       }
     }
   }
 };
 
-updateCells = () => {
+const updateCells = () => {
+  const dyingCells = [];
+  const livingCells = [];
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       const cell = matrix[i][j];
@@ -110,18 +122,26 @@ updateCells = () => {
 
       if (isAlive) {
         if (aliveNeighourCount < 2 || aliveNeighourCount > 3) {
-          cell.classList.remove(classes.activeCellColor, ...classes.activeCell);
+          dyingCells.push(cell);
         }
       } else {
         if (aliveNeighourCount === 3) {
-          cell.classList.add(classes.activeCellColor, ...classes.activeCell);
+          livingCells.push(cell);
         }
       }
     }
   }
+
+  for (let cell of dyingCells) {
+    cell.classList.remove(classes.activeCellColor);
+  }
+
+  for (let cell of livingCells) {
+    cell.classList.add(classes.activeCellColor);
+  }
 };
 
-countAliveNeighbors = (row, col) => {
+const countAliveNeighbors = (row, col) => {
   let count = 0;
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
