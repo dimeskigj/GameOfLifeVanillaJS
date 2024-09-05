@@ -38,9 +38,13 @@ const runGameLoop = () => {
 
 addEventListener("keyup", (event) => {
   if (event.code === "Space") {
-    isPaused = !isPaused;
+    togglePause();
   }
 });
+
+const togglePause = () => {
+  isPaused = !isPaused;
+}
 
 const initialize = () => {
   const height = window.innerHeight;

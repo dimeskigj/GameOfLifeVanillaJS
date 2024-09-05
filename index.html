@@ -10,13 +10,15 @@
     <title>Game of Life</title>
     <meta property="og:title" content="Game of Life">
     <meta property="og:description" content="Another Conway's Game of Life implementation.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/dimeskigj/GameOfLifeVanillaJS/e9e10677ef6c2c3d915893f5c53d5706740e26ac/favicon.png">
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/dimeskigj/GameOfLifeVanillaJS/e9e10677ef6c2c3d915893f5c53d5706740e26ac/favicon.png">
     <meta property="og:url" content="https://gameoflife.dimeski.net">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Game of Life">
     <meta name="twitter:description" content="Another Conway's Game of Life implementation.">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/dimeskigj/GameOfLifeVanillaJS/e9e10677ef6c2c3d915893f5c53d5706740e26ac/favicon.png">
+    <meta name="twitter:image"
+        content="https://raw.githubusercontent.com/dimeskigj/GameOfLifeVanillaJS/e9e10677ef6c2c3d915893f5c53d5706740e26ac/favicon.png">
     <link rel="icon" href="./favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./index.js"></script>
@@ -24,8 +26,13 @@
 
 <body>
     <div id="instructions"
-        class="absolute bottom-0 right-0 z-10 px-2 py-1 text-slate-100 bg-slate-100 bg-opacity-10 border-white rounded m-1 font-mono">
-        <a class="hover:underline cursor-pointer" href="https://github.com/dimeskigj/GameOfLifeVanillaJS" target="_blank">source code</a>
+        class="absolute bottom-0 lg:text-2xl right-0 z-10 px-3 text-slate-100 bg-slate-100 bg-opacity-10 border-white rounded m-1 font-mono">
+        <div class="flex">
+            <button onclick="togglePause()" class="active:scale-105">pause</button>
+            <div class="w-[1px] mx-3 bg-slate-100"></div>
+            <a class="hover:underline cursor-pointer" href="https://github.com/dimeskigj/GameOfLifeVanillaJS"
+                target="_blank">source code</a>
+        </div>
     </div>
 </body>
 
